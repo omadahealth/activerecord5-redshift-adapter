@@ -131,7 +131,7 @@ module ActiveRecord
         end
 
         def drop_table(table_name, options = {})
-          execute "DROP TABLE #{quote_table_name(table_name)}#{' CASCADE' if options[:force] == :cascade}"
+          execute "DROP TABLE#{' IF EXISTS' if options[:if_exists]} #{quote_table_name(table_name)}#{' CASCADE' if options[:force] == :cascade}"
         end
 
         # Returns true if schema exists.
@@ -379,7 +379,6 @@ module ActiveRecord
           case type.to_s
           when 'integer'
             return 'integer' unless limit
-            puts "hi there! #{type} #{limit} #{precision} #{scale}"
 
 
             case limit
